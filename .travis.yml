@@ -5,7 +5,7 @@ script:
 - make build
 - docker images
 - |
-  if [[ "${TRAVIS_BRANCH}" = "master" ]]; then
+  if [[ "${TRAVIS_BRANCH}" = "master" ]] && [["${TRAVIS_PULL_REQUEST}" = "false"]]; then
     echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
     docker tag insights-test $DOCKER_USERNAME/insights-test
     docker push $DOCKER_USERNAME/insights-test
