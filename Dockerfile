@@ -2,9 +2,6 @@ FROM andreasfertig/cppinsights-docker-base:latest
 
 LABEL maintainer "Andreas Fertig"
 
-COPY run_in_docker.sh /
-RUN chmod 0755 /run_in_docker.sh
-
 RUN rm -rf /var/log/*            && \
     rm -rf /var/cache/*          && \
     rm -rf /usr/share/doc/*      && \
@@ -25,6 +22,9 @@ RUN rm -rf /var/log/*            && \
     rm -rf /usr/share/man/*
 
 RUN chown -R insights:insights /home/insights
+
+COPY run_in_docker.sh /
+RUN chmod 0755 /run_in_docker.sh
 
 COPY insights /usr/bin/insights
 RUN chmod 0755 /usr/bin/insights
