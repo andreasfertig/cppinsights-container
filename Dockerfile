@@ -1,6 +1,7 @@
 FROM andreasfertig/cppinsights-docker-base:latest
 
-LABEL maintainer "Andreas Fertig"
+LABEL maintainer "Andreas  Fertig"
+
 
 RUN rm -rf /var/log/*            && \
     rm -rf /var/cache/*          && \
