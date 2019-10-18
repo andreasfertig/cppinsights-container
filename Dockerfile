@@ -1,7 +1,10 @@
 FROM andreasfertig/cppinsights-docker-base:latest
 
-LABEL maintainer "Andreas  Fertig"
+LABEL maintainer "Andreas Fertig"
 
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends libstdc++-8-dev && \
+    rm -rf /var/lib/apt/lists/*
 
 RUN rm -rf /var/log/*            && \
     rm -rf /var/cache/*          && \
