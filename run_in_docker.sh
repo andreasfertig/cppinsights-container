@@ -14,7 +14,7 @@ if [ $# -eq 1 ]; then
     echo -n "insights sha256: "
     sha256sum /usr/bin/insights | cut -d ' ' -f 1
 else
-    /usr/bin/insights /home/insights/insights.cpp $@
+    /usr/bin/insights /home/insights/insights.cpp $@ -resource-dir=/usr/lib/llvm-9/lib/clang/9.0.1
 fi
 
 exit $?
