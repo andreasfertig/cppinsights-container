@@ -11,8 +11,13 @@ umask 0177
 
 if [ $# -eq 1 ]; then
     /usr/bin/insights /home/insights/insights.cpp --version
+    echo ""
     echo -n "insights sha256: "
     sha256sum /usr/bin/insights | cut -d ' ' -f 1
+    echo ""
+    echo "Used standard libraries:"
+    echo "- libstdc++ (the default library): ${GCC_VERSION}"
+    echo "- libc++: ${CLANG_VERSION}"
 else
     /usr/bin/insights /home/insights/insights.cpp $@
 fi
