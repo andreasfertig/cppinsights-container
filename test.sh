@@ -18,4 +18,10 @@ if [ "$?" != "0" ]; then
     exit 1
 fi
 
+./r.sh `pwd`/benchmark.cpp
+if [ "$?" != "0" ]; then
+    echo "Failed to compile benchmark.cpp"
+    exit 1
+fi
+
 exit 0

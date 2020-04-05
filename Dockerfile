@@ -29,6 +29,16 @@ RUN chmod 0755 /run_in_docker.sh
 COPY insights /usr/bin/insights
 RUN chmod 0755 /usr/bin/insights
 
+RUN mkdir -p /opt/libs
+ADD benchmark-1.3.0/include /opt/libs/benchmark-1.3.0
+
+RUN find /opt/libs -type d -exec chmod go+rx {} + && \
+    find /opt/libs -type f -exec chmod go+r {} +
+
+RUN ln -sf /opt/libs/benchmark-1.3.0/benchmark /usr/include/benchmark && \
+    ls -l  /opt/libs && \
+    ls -lR /usr/include/benchmark/
+
 USER insights
 
 #CMD ["/run_in_docker.sh"]
