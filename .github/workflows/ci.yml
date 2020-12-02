@@ -4,9 +4,6 @@ on:
   push:
     branches: [master]
 
-  pull_request:
-    branches: [master]
-
   repository_dispatch:
     types: [rebuild_trigger]
 
@@ -35,4 +32,4 @@ jobs:
       - name: Notify listeners
         run: |
             sleep 5
-            curl --insecure -I -X POST https://${UPDATE_URL} &> /dev/null
+            curl --insecure -I -X POST https://${{ secrets.UPDATE_URL }} &> /dev/null
