@@ -1,0 +1,38 @@
+name: C++ Insighs Docker Image CI
+
+on:
+  push:
+    branches: [master]
+
+  pull_request:
+    branches: [master]
+
+  repository_dispatch:
+    types: [rebuild_trigger]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Fetch insights binary
+        run: make insights
+
+      - name: Build the Docker image
+        run: |
+            make build
+            docker images
+
+      - name: Login to DockerHub Registry
+        run: echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u andreasfertig --password-stdin
+
+      - name: Push the tagged Docker image
+        run: |
+            docker tag insights-test andreasfertig/cppinsights-container
+            docker push andreasfertig/cppinsights-container
+
+      - name: Notify listeners
+        run: |
+            sleep 5
+            curl --insecure -I -X POST https://${UPDATE_URL} &> /dev/null
