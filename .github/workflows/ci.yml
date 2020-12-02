@@ -1,4 +1,4 @@
-name: C++ Insighs Docker Image CI
+name: C++ Insights Docker Image CI
 
 on:
   push:
