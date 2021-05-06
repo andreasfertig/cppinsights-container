@@ -1,7 +1,11 @@
 all: build
 
+local: libs
+	./build.sh
+
 build: insights libs
 	./build.sh
+	docker tag insights-test andreasfertig/cppinsights-container
 
 libs:
 	wget -O - https://github.com/google/benchmark/archive/v1.3.0.tar.gz | tar xzf -
