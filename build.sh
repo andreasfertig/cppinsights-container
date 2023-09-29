@@ -2,8 +2,11 @@
 
 LOG_FILE=`date +%s`.log
 
+gbench_version=$1
+boost_version=`echo $2 | sed 's/\./_/g'`
+
 set -o pipefail
-docker build -t insights-testtest `pwd` 2>&1 | tee ${LOG_FILE}
+docker build --build-arg gbench_version="$gbench_version" --build-arg boost_version="$boost_version"  -t insights-testtest `pwd` 2>&1 | tee ${LOG_FILE}
 if [ "$?" != "0" ]; then
     cat ${LOG_FILE} | Mail -s "Dockerbuild (itself) failed" root
     exit 1

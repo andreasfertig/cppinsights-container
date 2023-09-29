@@ -18,6 +18,10 @@ if [ $# -eq 1 ]; then
     echo "Used standard libraries:"
     echo "- libstdc++ (the default library): ${GCC_VERSION}"
     echo "- libc++: ${CLANG_VERSION}"
+    echo ""
+    echo "Other available libraries:"
+    echo "- Google Benchmark: ${GBENCHMARK_VERSION}"
+    echo "- boost: ${BOOST_VERSION}"
 else
     /usr/bin/insights /home/insights/insights.cpp $@
 fi

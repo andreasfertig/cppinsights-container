@@ -24,4 +24,10 @@ if [ "$?" != "0" ]; then
     exit 1
 fi
 
+./r.sh `pwd`/boost.cpp
+if [ "$?" != "0" ]; then
+    echo "Failed to compile boost.cpp"
+    exit 1
+fi
+
 exit 0
