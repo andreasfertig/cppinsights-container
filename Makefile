@@ -8,14 +8,14 @@ local: libs
 
 build: insights libs
 	./build.sh $(GBENCH) $(BOOST)
-	docker tag insights-test andreasfertig/cppinsights-container
+	docker tag cppinsights-container andreasfertig/cppinsights-container
 
 libs:
-	wget -O - https://github.com/google/benchmark/archive/v$(GBENCH).tar.gz | tar xzf -
-	wget -O - https://boostorg.jfrog.io/artifactory/main/release/$(BOOST)/source/boost_1_83_0.tar.gz | tar xzf -
+	wget -q -O - https://github.com/google/benchmark/archive/v$(GBENCH).tar.gz | tar xzf -
+	wget -q -O - https://boostorg.jfrog.io/artifactory/main/release/$(BOOST)/source/boost_1_83_0.tar.gz | tar xzf -
 
 insights: clean
-	wget https://github.com/andreasfertig/cppinsights/releases/download/continuous/insights-ubuntu-14.04.tar.gz
+	wget -q https://github.com/andreasfertig/cppinsights/releases/download/continuous/insights-ubuntu-14.04.tar.gz
 	tar -xzf insights-ubuntu-14.04.tar.gz
 
 clean:

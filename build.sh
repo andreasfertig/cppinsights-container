@@ -16,7 +16,8 @@ fi
 
 if [ "$?" != "0" ]; then
     cat ${LOG_FILE} | Mail -s "Dockerbuild failed" root
+    exit 1
 else
     # active ate the new docker
-    docker tag insights-testtest insights-test 2>&1 | tee -a ${LOG_FILE}
+    docker tag insights-testtest cppinsights-container 2>&1 | tee -a ${LOG_FILE}
 fi

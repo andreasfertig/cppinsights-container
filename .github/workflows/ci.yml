@@ -26,7 +26,7 @@ jobs:
 
       - name: Push the tagged Docker image
         run: |
-            docker tag insights-test andreasfertig/cppinsights-container
+            docker tag cppinsights-container andreasfertig/cppinsights-container
             docker push andreasfertig/cppinsights-container
 
       - name: Notify listeners
