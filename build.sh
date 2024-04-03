@@ -4,20 +4,35 @@ LOG_FILE=`date +%s`.log
 
 gbench_version=$1
 boost_version=`echo $2 | sed 's/\./_/g'`
+arch=$3
+
+docker info
 
 set -o pipefail
-docker build --build-arg gbench_version="$gbench_version" --build-arg boost_version="$boost_version"  -t insights-testtest `pwd` 2>&1 | tee ${LOG_FILE}
+docker build --platform linux/${ARCH} --build-arg gbench_version="$gbench_version" --build-arg boost_version="$boost_version"  -t insights-testtest:${ARCH} .
 if [ "$?" != "0" ]; then
-    cat ${LOG_FILE} | Mail -s "Dockerbuild (itself) failed" root
+    echo "Dockerbuild (itself) ${ARCH} failed"
     exit 1
 fi
 
-./test.sh 2>&1 | tee -a ${LOG_FILE}
+docker tag insights-testtest:${ARCH} insights-testtest:latest
+
+ls -l
+docker images
+
+SKIP_LIBCPP=0
+
+# GitHub action ARM docker crashes possibly with OOM for libc++ test.
+if [[ "${ARCH}" == "arm64" ]]; then
+    SKIP_LIBCPP=1
+fi
+
+DOCKER_DEFAULT_PLATFORM=linux/${ARCH} ./test.sh ${SKIP_LIBCPP}
 
 if [ "$?" != "0" ]; then
-    cat ${LOG_FILE} | Mail -s "Dockerbuild failed" root
+    echo "Dockerbuild ${ARCH} failed"
     exit 1
 else
     # active ate the new docker
-    docker tag insights-testtest cppinsights-container 2>&1 | tee -a ${LOG_FILE}
+    docker tag insights-testtest:${ARCH} cppinsights-container:${ARCH}
 fi

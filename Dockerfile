@@ -4,9 +4,11 @@ LABEL maintainer "Andreas Fertig"
 
 ARG gbench_version
 ARG boost_version
+ARG TARGETARCH
 
 ENV BOOST_VERSION=$boost_version
 ENV GBENCHMARK_VERSION=$gbench_version
+ENV ARCH=insights-$TARGETARCH
 
 
 RUN rm -rf /var/log/*            && \
@@ -33,7 +35,7 @@ RUN chown -R insights:insights /home/insights
 COPY run_in_docker.sh /
 RUN chmod 0755 /run_in_docker.sh
 
-COPY insights /usr/bin/insights
+COPY ${ARCH} /usr/bin/insights
 RUN chmod 0755 /usr/bin/insights
 
 RUN mkdir -p /opt/libs
@@ -49,6 +51,5 @@ RUN ln -sf /opt/libs/benchmark/benchmark /usr/include/benchmark && \
 
 USER insights
 
-#CMD ["/run_in_docker.sh"]
 ENTRYPOINT ["/run_in_docker.sh"]
 CMD []
