@@ -4,12 +4,16 @@ LOG_FILE=`date +%s`.log
 
 gbench_version=$1
 boost_version=`echo $2 | sed 's/\./_/g'`
-arch=$3
+ARCH=$3
 
 docker info
 
 set -o pipefail
-docker build --platform linux/${ARCH} --build-arg gbench_version="$gbench_version" --build-arg boost_version="$boost_version"  -t insights-testtest:${ARCH} .
+docker build                                        \
+       --platform linux/${ARCH}                     \
+       --build-arg gbench_version="$gbench_version" \
+       --build-arg boost_version="$boost_version"   \
+       -t insights-testtest:${ARCH} .
 if [ "$?" != "0" ]; then
     echo "Dockerbuild (itself) ${ARCH} failed"
     exit 1
