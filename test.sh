@@ -8,7 +8,6 @@ function run_docker()
     useLibcpp=$2
     arg=''
 
-    if [[ $SKIP_LIBCPP == 0 ]]; then
     if [[ ${useLibcpp} -eq 1 ]]; then
         echo "With libc++"
         arg="-use-libc++"
@@ -19,9 +18,6 @@ function run_docker()
 
     # --security-opt seccomp=unconfined is required for gdb to turn of randomization
     docker run -h insights-testtest  --net=none -v ${file}:/home/insights/insights.cpp --rm -i --security-opt seccomp=unconfined insights-testtest ${arg} -- -std=c++17
-    else
-        return 0
-    fi
 }
 
 function run_test()
@@ -65,10 +61,10 @@ if [[ $? != 0 ]]; then
     exit 1
 fi
 
-# run_test `pwd`/boost.cpp
-# if [[ $? != 0 ]]; then
-#     echo "Failed to compile boost.cpp"
-#     exit 1
-# fi
+run_test `pwd`/boost.cpp
+if [[ $? != 0 ]]; then
+    echo "Failed to compile boost.cpp"
+    exit 1
+fi
 
 exit 0
