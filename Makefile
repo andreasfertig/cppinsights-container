@@ -5,7 +5,7 @@ ARCH := amd64
 all: build
 
 local: libs
-	./build.sh $(GBENCH) $(BOOST)
+	./build.sh $(GBENCH) $(BOOST) $(ARCH)
 
 build: insights libs
 	./build.sh $(GBENCH) $(BOOST) $(ARCH)
